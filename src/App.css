@@ -1,38 +1,69 @@
-.App {
-  text-align: center;
+
+.navbar{
+    background-color: #1C487E !important;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.text-color{
+    color: #1C487E !important;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.text-color:hover{
+    color: #1C487E !important;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.text-style{
+    font-family: sans-serif;
+    letter-spacing: 0.05em;
 }
 
-.App-link {
-  color: #61dafb;
+.bg-container{
+    background-color: #1C487E !important;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.card-color{
+    background-color: #0D014D !important;
+}
+
+.login-card{
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+}
+
+.responsive-height {
+    height: 70vh;
+}
+
+@media (max-width: 576px) {
+    .responsive-height {
+        height: auto;
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
+}
+
+/* App.css */
+.navbar-brand, .navbar-toggler {
+    display: flex;
+    align-items: center;
+}
+
+.navbar .container > .d-flex {
+    width: 100%;
+}
+
+.footer-nav .container > .row {
+    text-align: center;
+}
+
+.footer-nav .container > .row > .col {
+    margin-bottom: 15px;
+}
+
+@media (max-width: 576px) {
+    .footer-img {
+        max-width: 80px;
+    }
+}
+
+.dropdown-menu {
+    color: white !important;
 }
