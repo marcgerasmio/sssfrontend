@@ -3,34 +3,33 @@ import { GrLinkNext } from "react-icons/gr";
 import { FaFacebook } from "react-icons/fa";
 import { FaTwitter } from "react-icons/fa";
 import { FaInstagramSquare } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 import "./App.css";
 
 function Home() {
+    const navigate = useNavigate();
+    const redirect = () => { navigate("/auth"); }
+
     return (
         <>
-            <Navbar className="navbar" expand="lg">
+            <Navbar expand="lg" className="navbar">
                 <Container>
-                    <div className="d-flex align-items-center w-100">
-                        <Navbar.Brand href="#home" className="d-flex align-items-center">
-                            <Image src="sss.png" alt="" fluid />
-                        </Navbar.Brand>
-                        <Navbar.Toggle aria-controls="basic-navbar-nav" className="ms-auto" />
-                    </div>
+                    <Navbar.Brand href="#home">
+                    <Image src="sss.png" alt="" fluid />
+                    </Navbar.Brand>
+                    <Navbar.Toggle aria-controls="basic-navbar-nav" className="ms-auto" />
                     <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
-                        <Nav className="ms-5">
-                            <Nav.Link href="#home" className="fw-bold text-white fs-5 text-style">Home</Nav.Link>
-                            <Nav.Link href="#features" className="fw-bold text-white fs-5 text-style">Download</Nav.Link>
-                        </Nav>
-                        <div className="ms-4">
-                            <Button variant="light" className="fw-bold text-color text-style">
-                                Register Now &nbsp;
-                                <GrLinkNext />
-                            </Button>
-                        </div>
+                    <Nav className="me-auto"></Nav>
+                    <Nav className="d-lg-flex flex-column flex-lg-row">
+                        <Nav.Link href="#features" className="fw-bold text-white fs-5 text-style mb-lg-0 mb-3">Download</Nav.Link>
+                        <Button onClick={redirect} variant="light" className="fw-bold text-color text-style">
+                            Register Now &nbsp;
+                        <GrLinkNext />
+                        </Button>
+                    </Nav>
                     </Navbar.Collapse>
                 </Container>
             </Navbar>
-
             <Container className="d-flex justify-content-evenly mt-4 flex-wrap text-center">
                 <span className="text-color text-style fw-bold m-2">ABOUT SSS</span>
                 <span className="text-color text-style fw-bold m-2">MEMBERS & COVERAGE</span>
@@ -40,16 +39,16 @@ function Home() {
                 <span className="text-color text-style fw-bold m-2">CAREER OPPORTUNITIES</span>
             </Container>
 
-            <Container className="mt-4 d-flex justify-content-center">
-                <Carousel className="w-100 w-md-75">
+            <Container className="mt-4">
+                <Carousel className="w-100">
                     <Carousel.Item>
-                        <Image src="carousel-2.jpg" alt="" fluid className="w-75" />
+                    <Image src="carousel-2.jpg" alt="" fluid className="w-100" style={{objectFit: 'cover', maxHeight: '550px'}} />
                     </Carousel.Item>
                     <Carousel.Item>
-                        <Image src="carousel-2.jpg" alt="" fluid className="w-75" />
+                    <Image src="carousel.png" alt="" fluid className="w-100" style={{objectFit: 'cover', maxHeight: '550px'}} />
                     </Carousel.Item>
                     <Carousel.Item>
-                        <Image src="carousel-2.jpg" alt="" fluid className="w-75" />
+                    <Image src="carousel3.jpg" alt="" fluid className="w-100" style={{objectFit: 'cover', maxHeight: '550px'}} />
                     </Carousel.Item>
                 </Carousel>
             </Container>

@@ -13,15 +13,55 @@ import { FaMoneyCheckDollar } from "react-icons/fa6";
 import { GrServices } from "react-icons/gr";
 import { MdOutlinePayment } from "react-icons/md";
 import { IoLogOutSharp } from "react-icons/io5";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import "./App.css";
 
 function Dashboard() {
+    const [lastname, setLastname] = useState('');
+    const [firstname, setFirstname] = useState('');
+    const [crn, setCrn] = useState('');
+    const userId = sessionStorage.getItem('user_id');
+    const navigate = useNavigate();
+
+    // const Home = () => { navigate("/"); }
+
+    const redirect = () => {
+        navigate("/memberinfo");
+    }
+
+    const logout = () => {
+        sessionStorage.clear();
+        navigate("/auth");
+    }
+
+    const home = () => {
+        navigate("/");
+    }
+    
+    const fetchUser = async () => {
+        try {
+            const response = await fetch(`http://sssbackend.test/api/userdetails/${userId}`);
+            const data = await response.json();
+            console.log(data);
+            setCrn(data[0].crn);
+            setFirstname(data[0].firstname);
+            setLastname(data[0].lastname);
+        } catch (error) {
+            console.error("Error fetching Food data:", error);
+        }
+    };
+
+    useEffect(() => {
+        fetchUser();
+    }, []);
+    
     return(
         <>
             <Navbar className="navbar" expand="lg">
                 <Container>
-                    <div className="d-flex align-items-center w-100">
-                        <Navbar.Brand href="#home" className="d-flex align-items-center">
+                    <div className="d-flex align-items-center w-100" onClick={home}>
+                        <Navbar.Brand href="/" className="d-flex align-items-center">
                             <Image src="sss.png" alt="" fluid />
                         </Navbar.Brand>
                         <Navbar.Toggle aria-controls="basic-navbar-nav" className="ms-auto" />
@@ -29,9 +69,9 @@ function Dashboard() {
                     <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
                         <Nav className="ms-5">
                             <NavDropdown title={<FaUser size={30} style={{ color: 'white' }} />} id="basic-nav-dropdown" variant="light">
-                                <NavDropdown.Item href="#profile">Member Info</NavDropdown.Item>
+                                <NavDropdown.Item href="/memberinfo">Member Info</NavDropdown.Item>
                                 <NavDropdown.Divider />
-                                <NavDropdown.Item href="#logout">Logout</NavDropdown.Item>
+                                <NavDropdown.Item onClick={logout}>Logout</NavDropdown.Item>
                             </NavDropdown>
                         </Nav>
                     </Navbar.Collapse>
@@ -43,8 +83,8 @@ function Dashboard() {
                     <Card className="w-100 p-2">
                         <Card.Body>
                             <Card.Text className="fw-bold text-style">
-                                Gerasmio, Marc Dominic P.<br />
-                                SS Number: 09-3244987-8<br />
+                                {lastname}, {firstname}<br />
+                                SS Number: {crn}<br />
                             </Card.Text>
                             <Card.Text className="text-style text-muted italic">
                                 <RiErrorWarningFill size={20} />
@@ -56,38 +96,38 @@ function Dashboard() {
                 </Container>
             </Container>
 
-            <Container fluid className="mb-3 mt-3">
+            <Container className="mb-3 mt-3">
                 <Row>
                     <Col xs={12} lg={3}>
                         <Container className="d-flex flex-column gap-4">
-                            <Button variant="primary" className="text-style fw-bold rounded-pill p-2">
+                            <Button variant="primary" className="text-style fw-bold rounded-pill p-2 app-buttons">
                                 <IoHome size={25} className="mb-2" />&nbsp;HOME
                             </Button>
-                            <Button variant="primary" className="text-style fw-bold rounded-pill p-2">
+                            <Button variant="primary" onClick={redirect} className="text-style fw-bold rounded-pill p-2 app-buttons">
                                 <IoInformationCircle size={30} className="mb-1" />&nbsp;MEMBER INFO
                             </Button>
-                            <Button variant="primary" className="text-style fw-bold rounded-pill p-2">
+                            <Button variant="primary" className="text-style fw-bold rounded-pill p-2 app-buttons">
                                 <SiQuicklook size={25} className="mb-1" />&nbsp;INQUIRY
                             </Button>
-                            <Button variant="primary" className="text-style fw-bold rounded-pill p-2">
+                            <Button variant="primary" className="text-style fw-bold rounded-pill p-2 app-buttons">
                                 <FaHandsHoldingCircle size={25} className="mb-1" />&nbsp;BENEFITS
                             </Button>
-                            <Button variant="primary" className="text-style fw-bold rounded-pill p-2">
+                            <Button variant="primary" className="text-style fw-bold rounded-pill p-2 app-buttons">
                                 <FaMoneyCheckDollar size={25} className="mb-1" />&nbsp;LOANS
                             </Button>
-                            <Button variant="primary" className="text-style fw-bold rounded-pill p-2">
+                            <Button variant="primary" className="text-style fw-bold rounded-pill p-2 app-buttons">
                                 <GrServices size={25} className="mb-1" />&nbsp;SERVICES
-                            </Button>
-                            <Button variant="primary" className="text-style fw-bold rounded-pill p-2">
+                            </Button>  
+                            <Button variant="primary" className="text-style fw-bold rounded-pill p-2 app-buttons">
                                 <MdOutlinePayment size={25} className="mb-1" />&nbsp;PRN
                             </Button>
-                            <Button variant="primary" className="text-style fw-bold rounded-pill p-2 mb-3">
+                            <Button variant="primary" onClick={logout} className="text-style fw-bold rounded-pill p-2 mb-3 app-buttons">
                                 <IoLogOutSharp size={25} className="mb-1" />&nbsp;LOGOUT
                             </Button>
                         </Container>
                     </Col>
                     <Col>
-                        <Image fluid src="carousel-2.jpg" alt="" />
+                        <Image fluid src="carousel3.jpg" alt="" />
                     </Col>
                 </Row>
             </Container>

@@ -1,30 +1,59 @@
+import React, { useState } from 'react';
 import { Navbar, Container, Image, Nav, Button, Card, InputGroup, Form, Row, Col } from "react-bootstrap";
-import { IoGlobeSharp } from "react-icons/io5";
-import { IoLocation } from "react-icons/io5";
-import { FaPhoneAlt } from "react-icons/fa";
-import { MdEmail } from "react-icons/md";
-import { FaUserAlt } from "react-icons/fa";
+import { IoGlobeSharp, IoLocation } from "react-icons/io5";
+import { FaPhoneAlt, FaUserAlt, FaFacebookSquare, FaInstagramSquare } from "react-icons/fa";
 import { RiLockPasswordFill } from "react-icons/ri";
-import { FaFacebookSquare } from "react-icons/fa";
-import { FaSquareXTwitter } from "react-icons/fa6";
+import { MdEmail } from "react-icons/md";
 import { AiFillGoogleSquare } from "react-icons/ai";
-import { FaInstagramSquare } from "react-icons/fa";
+import { FaSquareXTwitter } from "react-icons/fa6";
+import { Link, useNavigate } from "react-router-dom";
 import "./App.css";
 
 function Login() {
+    const [emailaddress, setEmailaddress] = useState('');
+    const [password, setPassword] = useState('');
+    const navigate = useNavigate();
+    // const home = () => { navigate("/"); }
+            
+    const login = async () => {
+        try {
+            const response = await fetch('http://sssbackend.test/api/login', {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    emailaddress,
+                    password
+                })
+            });
+            if (!response.ok) {
+                alert("Invalid credentials");
+                return;
+            }
+            const data = await response.json();
+            console.log(data);
+            sessionStorage.setItem('user_id', data.user.id);
+            navigate("/dashboard");
+        } catch (error) {
+            console.error("Error during login:", error);
+            alert("Invalid credentials");
+        }
+    };
+    
     return (
         <>
             <Navbar className="navbar" expand="lg">
                 <Container>
                     <div className="d-flex align-items-center w-100">
-                        <Navbar.Brand href="#home" className="d-flex align-items-center">
+                        <Navbar.Brand href="#" className="d-flex align-items-center">
                             <Image src="sss.png" alt="" fluid />
                         </Navbar.Brand>
                         <Navbar.Toggle aria-controls="basic-navbar-nav" className="ms-auto" />
                     </div>
                     <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
                         <Nav className="ms-5">
-                            <Nav.Link href="#home" className="fw-bold text-white fs-5 text-style">Home</Nav.Link>
+                            <Link to='/' className='text-style fw-bold text-white fs-5 text-decoration-none mt-2 me-3'>Home</Link>
                             <Nav.Link href="#features" className="fw-bold text-white fs-5 text-style">Download</Nav.Link>
                         </Nav>
                     </Navbar.Collapse>
@@ -37,18 +66,20 @@ function Login() {
                         <Card className="p-4 login-card">
                             <Card.Body>
                                 <Card.Text>
-                                    <InputGroup className="mb-2">
+                                    <InputGroup className="mb-3">
                                         <InputGroup.Text id="basic-addon1">
                                             <FaUserAlt />
                                         </InputGroup.Text>
                                         <Form.Control
-                                            placeholder="Username"
-                                            aria-label="Username"
+                                            placeholder="Email"
+                                            aria-label="Email"
                                             aria-describedby="basic-addon1"
                                             className="p-3"
+                                            value={emailaddress}
+                                            onChange={(e) => setEmailaddress(e.target.value)}
                                         />
                                     </InputGroup>
-                                    <InputGroup className="mb-3">
+                                    <InputGroup className="mb-4">
                                         <InputGroup.Text id="basic-addon1">
                                             <RiLockPasswordFill />
                                         </InputGroup.Text>
@@ -58,14 +89,16 @@ function Login() {
                                             aria-label="Password"
                                             aria-describedby="basic-addon1"
                                             className="p-3"
+                                            value={password}
+                                            onChange={(e) => setPassword(e.target.value)}
                                         />
                                     </InputGroup>
                                     <div className="d-flex justify-content-center mb-4">
-                                        <Button variant="primary" className="fw-bold text-style w-100 p-3">Login</Button>
+                                        <Button variant="primary" className="fw-bold text-style w-100 p-3 app-buttons" onClick={login}>Login</Button>
                                     </div>
                                     <div className="d-flex justify-content-center">
                                         <span className="text-style">Don't have an account?</span> &nbsp;
-                                        <span className="text-decoration-underline text-style">Register</span>
+                                        <Link to='/register' className='text-style'>Register</Link>
                                     </div>
                                     <hr />
                                     <Container className="d-flex justify-content-center gap-3">
@@ -81,7 +114,7 @@ function Login() {
                 </Row>
             </Container>
 
-            <Navbar bg="dark" data-bs-theme="dark" className="footer-nav p-3 fixed-bottom p-5">
+            <Navbar bg="dark" data-bs-theme="dark" className="footer-nav fixed-bottom p-4">
                 <Container className="d-flex flex-column flex-md-row justify-content-md-between">
                     <>
                         <p className="text-white mb-2 mb-md-0">

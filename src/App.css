@@ -24,6 +24,19 @@
     background-color: #0D014D !important;
 }
 
+.app-buttons{
+    background-color: #0D014D !important;
+    border-color: #0D014D !important;
+}
+
+.app-buttons:hover{
+    opacity: 0.50;
+}
+
+.app-buttons:active{
+    opacity: 0.25;
+}
+
 .login-card{
     box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
 }
@@ -67,3 +80,9 @@
 .dropdown-menu {
     color: white !important;
 }
+
+@media (max-width: 768px) {
+    .btn-width {
+      width: 100% !important;
+    }
+  }
